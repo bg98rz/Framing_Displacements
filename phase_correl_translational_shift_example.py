@@ -17,14 +17,32 @@ class CameraTranslationDetect(object):
         print('Hello, world.')
         
     def detect_phase_shift(self, prev_frame, curr_frame):
-        'returns detected sub-pixel phase-shift between two frames'
+        'opencv cv2 implementation - returns detected sub-pixel phase-shift between two frames'
         prev_frame = np.float32(cv2.cvtColor(prev_frame, cv2.COLOR_BGR2GRAY))    # convert to required type
         curr_frame = np.float32(cv2.cvtColor(curr_frame, cv2.COLOR_BGR2GRAY))    # convert to required type
          #calculate phase-correlation between current and previous frame
         shift = cv2.phaseCorrelate(prev_frame, curr_frame)
         return shift
-
+    
+    def fft_translation(self, prev_frame, curr_frame):
+        'stand-alone implementation - returns x, y translation between two frames'
+        shape = prev_frame.shape
+        f0 = fft2(prev_frame)
+        f1 = fft2(curr_frame)
+        ir = abs(ifft2((f0 * f1.conjugate()) / (abs(f0) * abs(f1))))
+        t0, t1 = numpy.unravel_index(numpy.argmax(ir), shape)
+        if t0 > shape[0] // 2:
+            t0 -= shape[0]
+        if t1 > shape[1] // 2:
+            t1 -= shape[1]
+        return [t0, t1]
       
+        
+
+
+# ***    ***    ***     Implementation      ***     ***     ***
+
+
 vs = VideoStream(src=0).start()    # initialize the video stream
 time.sleep(2.0)    # allow camera to warm up
 fps = FPS().start()    # initialize the FPS counter

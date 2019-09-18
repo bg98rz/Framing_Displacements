@@ -6,6 +6,8 @@ from imutils.video import FPS
 import time
 import math
 
+from numpy.fft import fft2, ifft2, fftshift
+
 class CameraTranslationDetect(object):
     '''
     Class for calculating translational shift betwen two frames
@@ -24,7 +26,7 @@ class CameraTranslationDetect(object):
         shift = cv2.phaseCorrelate(prev_frame, curr_frame)
         return shift
     
-    def translation(self, im0, im1):
+    def fft_phase_shift(self, im0, im1):
         'stand-alone implementation - returns x, y translation between two frames'
         shape = im0.shape
         f0 = fft2(im0)

@@ -19,7 +19,7 @@ class CameraTranslationDetect(object):
         self.initial_frame = np.float32(cv2.cvtColor(initial_frame, cv2.COLOR_BGR2GRAY))    # convert to required type
         
     def detect_phase_shift(self, curr_frame):
-        'returns detected sub-pixel phase-shift between two frames'
+        'opencv implementation - returns detected sub-pixel phase-shift between two frames'
         curr_frame = np.float32(cv2.cvtColor(curr_frame, cv2.COLOR_BGR2GRAY))    # convert to required type
          #calculate phase-correlation between current and previous frame
         shift = cv2.phaseCorrelate(self.initial_frame, curr_frame)

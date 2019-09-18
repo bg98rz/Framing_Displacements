@@ -24,13 +24,13 @@ class CameraTranslationDetect(object):
         shift = cv2.phaseCorrelate(prev_frame, curr_frame)
         return shift
     
-    def fft_translation(self, prev_frame, curr_frame):
+    def translation(self, im0, im1):
         'stand-alone implementation - returns x, y translation between two frames'
-        shape = prev_frame.shape
-        f0 = fft2(prev_frame)
-        f1 = fft2(curr_frame)
+        shape = im0.shape
+        f0 = fft2(im0)
+        f1 = fft2(im1)
         ir = abs(ifft2((f0 * f1.conjugate()) / (abs(f0) * abs(f1))))
-        t0, t1 = numpy.unravel_index(numpy.argmax(ir), shape)
+        t0, t1, c = np.unravel_index(np.argmax(ir), shape)
         if t0 > shape[0] // 2:
             t0 -= shape[0]
         if t1 > shape[1] // 2:
@@ -38,8 +38,7 @@ class CameraTranslationDetect(object):
         return [t0, t1]
       
         
-
-
+        
 # ***    ***    ***     Implementation      ***     ***     ***
 
 

@@ -23,7 +23,21 @@ class CameraTranslationDetect(object):
         shift = cv2.phaseCorrelate(self.initial_frame, curr_frame)
         return shift
 
+    def fft_phase_shift(self, im0, im1):
+        'stand-alone implementation - returns x, y translation between two frames'
+        shape = im0.shape
+        f0 = fft2(im0)
+        f1 = fft2(im1)
+        ir = abs(ifft2((f0 * f1.conjugate()) / (abs(f0) * abs(f1))))
+        t0, t1, c = np.unravel_index(np.argmax(ir), shape)
+        if t0 > shape[0] // 2:
+            t0 -= shape[0]
+        if t1 > shape[1] // 2:
+            t1 -= shape[1]
+        return [t0, t1]
     
+    
+    # implementation
     
 vs = VideoStream(src=0).start()    # initialize the video stream
 time.sleep(2.0)    # allow camera to warm up

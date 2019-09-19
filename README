@@ -2,7 +2,7 @@ This file contains information regarding each coding solution in this repository
 
 1. 'CameraTranslation.py'
       
-      This is a python class structure which houses functionality for calculating translational changes
+      This script is a python class structure which houses functionality for calculating translational changes
       between two images. The class contains an initialiser method and two subsequent methods. The first
       method 'detect_phase_shift' makes use of the opencv implementation of the fft phase correlation algorithm.
       The second method 'fft_phase_shift' is a stand-alone implementation of the same algorithm.

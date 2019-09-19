@@ -1,0 +1,33 @@
+This file contains information regarding each coding solution in this repository.
+
+1. 'CameraTranslation.py'
+      
+      This is a python class structure which houses functionality for calculating translational changes
+      between two images. The class contains an initialiser method and two subsequent methods. The first
+      method 'detect_phase_shift' makes use of the opencv implementation of the fft phase correlation algorithm.
+      The second method 'fft_phase_shift' is a stand-alone implementation of the same algorithm.
+      
+      The class expects a frame to be passed in on instantiation, this frame will be stored as a reference frame. It will 
+      then  be compared against any frame that gets passed into 'detect_phase_shift' or 'fft_phase_shift' methods to determine
+      the shift between the two frames.
+      
+
+2. 'phase_correl_translational_shift_example.py'
+
+    This script provides a video-stream implementation of the CameraTranslation class. This version of the CameraTranslation class is
+    slightly different, in that it doesnt accept an image at instantiation. Pairs of images are passed directly into the methods described
+    above. This example is concerned only with detecting camera-motion, and does not compare anything to a reference frame, it simply compares
+    pairs of subsequent frames.
+    
+
+3. 'phase_correl_position_calibration_example.py'
+
+    This script provides another video-stream implementation of the CameraTranslation class. This example demonstrates how the code
+    can be adapted for camera-position calibration. This is achieved by accepting a reference image at instantiation, and comparing 
+    every subsequent frame to that reference frame.
+    
+    
+4.  'phase_log_rotation.py'
+
+    This script provides an implementation of the Fourier Mellen Transform method. It calculates the phase correlation between frames that
+    have undergone a log-polar transformation. This script can be utilised to determine rotational and scaling changes between frames.

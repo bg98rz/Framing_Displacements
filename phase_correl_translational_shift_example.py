@@ -19,9 +19,11 @@ class CameraTranslationDetect(object):
         print('Hello, world.')
         
     def detect_phase_shift(self, prev_frame, curr_frame):
-        'opencv cv2 implementation - returns detected sub-pixel phase-shift between two frames'
-        prev_frame = np.float32(cv2.cvtColor(prev_frame, cv2.COLOR_BGR2GRAY))    # convert to required type
-        curr_frame = np.float32(cv2.cvtColor(curr_frame, cv2.COLOR_BGR2GRAY))    # convert to required type
+        'opencv cv2 - returns detected sub-pixel phase-shift between two frames'
+        prev_frame = np.float32(cv2.cvtColor(prev_frame, 
+                                             cv2.COLOR_BGR2GRAY))    # convert to required type
+        curr_frame = np.float32(cv2.cvtColor(curr_frame, 
+                                             cv2.COLOR_BGR2GRAY))    
          #calculate phase-correlation between current and previous frame
         shift = cv2.phaseCorrelate(prev_frame, curr_frame)
         return shift
@@ -61,8 +63,8 @@ while True:
     frame = vs.read()    # read frame from video stream
     frame = imutils.resize(frame, width=400)    # resize output window
 
-    if n == 0:    # check if firt iteration
-        initial = frame.copy()    # store first frame from stream
+    if n == 0:    # check if first frame
+        initial = frame.copy()    # store first frame 
         prev = frame.copy()
         n=n+1
      
@@ -86,7 +88,8 @@ while True:
                 (0, 0, 255, 0), #font color
                 2) #font stroke
     else:
-        cv2.putText(frame, "Position Stable", center, cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 0, 0), 2) 
+        cv2.putText(frame, "Position Stable", 
+                    center, cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 0, 0), 2) 
 
     cv2.imshow("Frame", frame)    #display output
     

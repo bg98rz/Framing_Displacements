@@ -9,9 +9,9 @@ import math
 from numpy.fft import fft2, ifft2, fftshift
 
 class CameraTranslationDetect(object):
-    '''
+    """
     Class for calculating translational shift betwen two frames
-    '''
+    """
     version = '0.1'
     
     def __init__(self):

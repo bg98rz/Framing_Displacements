@@ -9,24 +9,27 @@ import math
 from numpy.fft import fft2, ifft2, fftshift
 
 class CameraTranslationDetect(object):
-    '''
+    """
     Class for calculating translational shift betwen two frames
-    '''
+    """
+    
     version = '2019.0.1'
     
-    def __init__(self, initial_frame)
-    'initializer method'
-        self.initial_frame = np.float32(cv2.cvtColor(initial_frame, cv2.COLOR_BGR2GRAY))    # convert to required type
+    def __init__(self, initial_frame):
+        """initializer method"""
+        self.initial_frame = np.float32(
+            cv2.cvtColor(initial_frame, cv2.COLOR_BGR2GRAY))    # convert to required type
         
     def detect_phase_shift(self, curr_frame):
-        'opencv implementation - returns detected sub-pixel phase-shift between two frames'
-        curr_frame = np.float32(cv2.cvtColor(curr_frame, cv2.COLOR_BGR2GRAY))    # convert to required type
-         #calculate phase-correlation between current and previous frame
+        """opencv implementation - returns detected sub-pixel phase-shift between two frames"""
+        curr_frame = np.float32(
+            cv2.cvtColor(curr_frame, cv2.COLOR_BGR2GRAY))  
+        
         shift = cv2.phaseCorrelate(self.initial_frame, curr_frame)
         return shift
 
     def fft_phase_shift(self, im0, im1):
-        'stand-alone implementation - returns x, y translation between two frames'
+        """stand-alone implementation - returns x, y translation between two frames"""
         shape = im0.shape
         f0 = fft2(im0)
         f1 = fft2(im1)
@@ -39,17 +42,17 @@ class CameraTranslationDetect(object):
         return [t0, t1]
     
     
-    # implementation
+# implementation
     
 vs = VideoStream(src=0).start()    # initialize the video stream
 time.sleep(2.0)    # allow camera to warm up
 fps = FPS().start()    # initialize the FPS counter
 
-n=0    # incrementer
+n=0
 
 threshold = 30    # detection sensitivity value
 
-center = 200-50, 200   #define point for logging camera-state to screen
+center = 200-50, 200   # point for logging camera-state to screen
 
 #mainloop
 while True:

@@ -12,7 +12,7 @@ class CameraTranslationDetect(object):
     """
     Class for calculating translational shift betwen two frames
     """
-    version = '0.1'
+    version = '2019.0.1'
     
     def __init__(self):
         'initializer method'

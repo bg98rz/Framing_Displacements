@@ -15,21 +15,21 @@ class CameraTranslationDetect(object):
     version = '2019.0.1'
     
     def __init__(self):
-        'initializer method'
+        """initializer method"""
         print('Hello, world.')
         
     def detect_phase_shift(self, prev_frame, curr_frame):
-        'opencv cv2 - returns detected sub-pixel phase-shift between two frames'
+        """opencv cv2 - returns detected sub-pixel phase-shift between two frames"""
         prev_frame = np.float32(cv2.cvtColor(prev_frame, 
                                              cv2.COLOR_BGR2GRAY))    # convert to required type
         curr_frame = np.float32(cv2.cvtColor(curr_frame, 
                                              cv2.COLOR_BGR2GRAY))    
-         #calculate phase-correlation between current and previous frame
-        shift = cv2.phaseCorrelate(prev_frame, curr_frame)
+        shift = cv2.phaseCorrelate(prev_frame, curr_frame)      #calculate phase-correlation between current and previous frame
+
         return shift
     
     def fft_phase_shift(self, im0, im1):
-        'stand-alone implementation - returns x, y translation between two frames'
+        """stand-alone implementation - returns x, y translation between two frames"""
         shape = im0.shape
         f0 = fft2(im0)
         f1 = fft2(im1)

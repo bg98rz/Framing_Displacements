@@ -7,6 +7,8 @@ from numpy.fft import fft2, ifft2, fftshift
 class CameraTranslation(object):
     """
     Class for calculating translational shift betwen two frames
+    
+    - All frames must be of equal size
     """
     
     version = '2019.0.1'
@@ -23,11 +25,11 @@ class CameraTranslation(object):
         shift = cv2.phaseCorrelate(self.initial_frame, curr_frame)      #get phase-shift 
         return shift
 
-    def fft_phase_shift(self, im0, im1):
+    def fft_phase_shift(self, im0):
         """stand-alone implementation - returns x, y translation between two frames"""
         shape = im0.shape
         f0 = fft2(im0)
-        f1 = fft2(im1)
+        f1 = fft2(self.initial_frame)
         ir = abs(ifft2((f0 * f1.conjugate()) / (abs(f0) * abs(f1))))
         t0, t1, c = np.unravel_index(np.argmax(ir), shape)
         if t0 > shape[0] // 2:
